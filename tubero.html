@@ -23,13 +23,13 @@
     }
     button {
         padding: 25px 50px;
-        font-size: 25px;
+        font-size: 30px;
         cursor: pointer;
         background-color: #ff6f20; /* Button color to match text */
         border: none;
-        border-radius: 10px;
+        border-radius: 5px;
         color: black; /* Text color on button */
-        margin-top: 15px; /* Space between buttons */
+        margin-top: 10px; /* Space between buttons */
     }
     #timerImage, #waitingText {
         display: none; /* Initially hidden */
@@ -55,9 +55,9 @@
     <div id="timerText">5 minuti</div>
     <button id="startButton" onclick="startTimer()">Avvia Timer</button>
     <button id="resetButton" onclick="resetPage()" style="display:none;">Resetta Timer</button>
-    <div id="waitingText">Round in corso</div>
+    <div id="waitingText">Round in corso...</div>
     <img id="timerImage" src="endimage.png" alt="Descrizione Immagine">
-    <audio id="round.mp3" preload="auto"></audio>
+    <audio id="timerSound" src="round.mp3" preload="auto"></audio>
 </div>
 
 <script>
@@ -93,7 +93,7 @@ function startTimer() {
             img.classList.remove('vibrating'); // Stop vibrating effect
             resetPage(); // Reset the page
         };
-    }, 2000); // 300000 milliseconds = 5 minutes
+    }, 300000); // 300000 milliseconds = 5 minutes
 }
 
 function resetPage() {
