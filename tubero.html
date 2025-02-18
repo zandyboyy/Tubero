@@ -67,9 +67,27 @@ function startTimer() {
         img.classList.add('vibrating'); // Start vibrating effect
 
         // Play the audio when the timer ends
-        document.getElementById('timerSound').play();
-    }, 1000); // 300000 milliseconds = 5 minutes
+        var sound = document.getElementById('timerSound');
+        sound.play();
+        
+        // Listen for when the audio ends
+        sound.onended = function() {
+            img.classList.remove('vibrating'); // Stop vibrating effect
+            resetPage(); // Reset the page
+        };
+    }, 300000); // 300000 milliseconds = 5 minutes
 }
+
+function resetPage() {
+    // Reset all elements to initial state
+    document.getElementById('timerText').style.display = 'block';
+    document.getElementById('startButton').style.display = 'block';
+    document.getElementById('waitingText').style.display = 'none';
+    document.getElementById('timerImage').style.display = 'none';
+    document.getElementById('timerImage').classList.remove('vibrating');
+    document.getElementById('timerSound').currentTime = 0; // Reset audio to start
+}
+
 </script>
 </body>
 </html>
