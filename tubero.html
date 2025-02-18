@@ -21,7 +21,7 @@
         border-radius: 5px;
         color: black; /* Text color on button */
     }
-    #timerImage {
+    #timerImage #waitingText {
         display: none; /* Initially hidden */
         max-width: 150%; /* Ensures image is responsive */
         height: auto;
@@ -32,8 +32,8 @@
 <body>
 <div id="timerText">5 MINUTI</div>
 <button id="startButton" onclick="startTimer()">Avvia Timer</button>
+<div id="waitingText">GIOCA!</div>
 <img id="timerImage" src="endimage.png" alt="Descrizione Immagine">
-
 <audio id="timerSound" src="round.mp3" preload="auto"></audio>
 
 <script>
@@ -47,6 +47,8 @@ function startTimer() {
     
     // Start the 5-minute timer (300000 milliseconds)
     setTimeout(function() {
+        // Hide waiting message
+        document.getElementById('waitingText').style.display = 'none';
         // Show the image when the timer ends
         document.getElementById('timerImage').style.display = 'block';
         // Sound starts at the end of the timer
