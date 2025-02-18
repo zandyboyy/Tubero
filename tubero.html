@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timer Nascosto con Immagine</title>
+<title>Timer Nascosto con Immagine e Suono</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -13,55 +13,50 @@
         color: #ff6f20; /* Text color set to #ff6f20 */
     }
     #startButton {
-        padding: 15px 30px;
-        font-size: 24px;
+        padding: 10px 20px;
+        font-size: 16px;
         cursor: pointer;
         background-color: #ff6f20; /* Button color to match text */
         border: none;
         border-radius: 5px;
         color: black; /* Text color on button */
     }
-    #timerImage #waitingText {
+    #timerImage, #waitingText {
         display: none; /* Initially hidden */
-        max-width: 150%; /* Ensures image is responsive */
+        max-width: 100%; /* Ensures image is responsive */
         height: auto;
         margin: 0 auto; /* Centers the image horizontally */
     }
 </style>
 </head>
 <body>
-<div id="timerText">5 MINUTI</div>
+<div id="timerText">5 minuti</div>
 <button id="startButton" onclick="startTimer()">Avvia Timer</button>
-<div id="waitingText">GIOCA!</div>
-<img id="timerImage" src="endimage.png" alt="Descrizione Immagine">
+<div id="waitingText">Gioca!</div>
+<img id="timerImage" src="endimage.jpg" alt="Descrizione Immagine">
 <audio id="timerSound" src="round.mp3" preload="auto"></audio>
 
 <script>
 function startTimer() {
-    // Hide the text and button
+    // Hide the text and button immediately upon clicking
     document.getElementById('timerText').style.display = 'none';
     document.getElementById('startButton').style.display = 'none';
+
+    // Show waiting message
+    document.getElementById('waitingText').style.display = 'block';
     
-    // Show the image
-    document.getElementById('timerImage').style.display = 'block';
-    
-    // Start the 5-minute timer (300000 milliseconds)
+    // Set a 5-minute timer
     setTimeout(function() {
         // Hide waiting message
         document.getElementById('waitingText').style.display = 'none';
+
         // Show the image when the timer ends
         document.getElementById('timerImage').style.display = 'block';
-        // Sound starts at the end of the timer
-        document.getElementById('timerSound').play();
-    }, 1000); // Modify this value to change the timer duration
-}
 
-// Optional function to stop the sound (if you want to add it)
-function stopSound() {
-    document.getElementById('timerSound').pause();
-    document.getElementById('timerSound').currentTime = 0;
+        // Play the audio when the timer ends
+        document.getElementById('timerSound').play();
+    }, 1000); // 300000 milliseconds = 5 minutes
 }
 </script>
 </body>
 </html>
-
