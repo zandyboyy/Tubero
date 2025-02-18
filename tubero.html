@@ -21,14 +21,15 @@
         text-align: center;
         display: block; /* Ensure block level for proper centering */
     }
-    #startButton {
-        padding: 10px 20px;
-        font-size: 16px;
+    button {
+        padding: 25px 50px;
+        font-size: 25px;
         cursor: pointer;
         background-color: #ff6f20; /* Button color to match text */
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         color: black; /* Text color on button */
+        margin-top: 15px; /* Space between buttons */
     }
     #timerImage, #waitingText {
         display: none; /* Initially hidden */
@@ -53,13 +54,19 @@
 <div class="container">
     <div id="timerText">5 minuti</div>
     <button id="startButton" onclick="startTimer()">Avvia Timer</button>
-    <div id="waitingText">GIOCA!</div>
+    <button id="resetButton" onclick="resetPage()" style="display:none;">Resetta Timer</button>
+    <div id="waitingText">Round in corso</div>
     <img id="timerImage" src="endimage.png" alt="Descrizione Immagine">
-    <audio id="timerSound" src="round.mp3" preload="auto"></audio>
+    <audio id="round.mp3" preload="auto"></audio>
 </div>
 
 <script>
+let timer = null; // Global variable to hold timer reference
+
 function startTimer() {
+    resetPage(); // Reset any running timers or states before starting new
+    document.getElementById('resetButton').style.display = 'block'; // Show reset button
+
     // Hide the text and button immediately upon clicking
     document.getElementById('timerText').style.display = 'none';
     document.getElementById('startButton').style.display = 'none';
@@ -68,7 +75,7 @@ function startTimer() {
     document.getElementById('waitingText').style.display = 'block';
     
     // Set a 5-minute timer
-    setTimeout(function() {
+    timer = setTimeout(function() {
         // Hide waiting message
         document.getElementById('waitingText').style.display = 'none';
 
@@ -90,13 +97,15 @@ function startTimer() {
 }
 
 function resetPage() {
-    // Reset all elements to initial state
+    clearTimeout(timer); // Clear the existing timer
     document.getElementById('timerText').style.display = 'block';
     document.getElementById('startButton').style.display = 'block';
+    document.getElementById('resetButton').style.display = 'none'; // Hide reset button
     document.getElementById('waitingText').style.display = 'none';
     document.getElementById('timerImage').style.display = 'none';
     document.getElementById('timerImage').classList.remove('vibrating');
     document.getElementById('timerSound').currentTime = 0; // Reset audio to start
+    document.getElementById('timerSound').pause(); // Stop any playing audio
 }
 </script>
 </body>
