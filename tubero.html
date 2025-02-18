@@ -27,6 +27,17 @@
         height: auto;
         margin: 0 auto; /* Centers the image horizontally */
     }
+    @keyframes vibrate {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+    }
+    .vibrating {
+        animation: vibrate 0.1s infinite; /* Adjust timing to control speed */
+    }
 </style>
 </head>
 <body>
@@ -50,8 +61,10 @@ function startTimer() {
         // Hide waiting message
         document.getElementById('waitingText').style.display = 'none';
 
-        // Show the image when the timer ends
-        document.getElementById('timerImage').style.display = 'block';
+        // Show the image when the timer ends and apply vibration
+        var img = document.getElementById('timerImage');
+        img.style.display = 'block';
+        img.classList.add('vibrating'); // Start vibrating effect
 
         // Play the audio when the timer ends
         document.getElementById('timerSound').play();
