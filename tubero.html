@@ -58,54 +58,67 @@
     <div id="waitingText">Round in corso...</div>
     <img id="timerImage" src="endimage.png" alt="Descrizione Immagine">
     <audio id="timerSound" src="round.mp3" preload="auto"></audio>
+    <audio id="halfwaySound" src="halfway.mp3" preload="auto"></audio>
 </div>
 
 <script>
-let timer = null; // Global variable to hold timer reference
+let timers = []; // Array to hold all active timers
 
 function startTimer() {
-    resetPage(); // Reset any running timers or states before starting new
-    document.getElementById('resetButton').style.display = 'block'; // Show reset button
+    resetPage(); // Reset any running timers or states
+    document.getElementById('resetButton').style.display = 'block';
 
-    // Hide the text and button immediately upon clicking
+    // Hide elements
     document.getElementById('timerText').style.display = 'none';
     document.getElementById('startButton').style.display = 'none';
-
-    // Show waiting message
     document.getElementById('waitingText').style.display = 'block';
-    
-    // Set a 5-minute timer
-    timer = setTimeout(function() {
-        // Hide waiting message
+
+    // Halfway point (4 minutes)
+    const halfwayTimer = setTimeout(function() {
+        document.getElementById('halfwaySound').play();
+    }, 2500); // 240,000 ms = 4 minutes
+
+    // Full timer (8 minutes)
+    const fullTimer = setTimeout(function() {
         document.getElementById('waitingText').style.display = 'none';
-
-        // Show the image when the timer ends and apply vibration
-        var img = document.getElementById('timerImage');
+        const img = document.getElementById('timerImage');
         img.style.display = 'block';
-        img.classList.add('vibrating'); // Start vibrating effect
-
-        // Play the audio when the timer ends
-        var sound = document.getElementById('timerSound');
+        img.classList.add('vibrating');
+        
+        const sound = document.getElementById('timerSound');
         sound.play();
         
-        // Listen for when the audio ends
         sound.onended = function() {
-            img.classList.remove('vibrating'); // Stop vibrating effect
-            resetPage(); // Reset the page
+            img.classList.remove('vibrating');
+            resetPage();
         };
-    }, 30000); // 300000 milliseconds = 5 minutes
+    }, 5000); // 480,000 ms = 8 minutes
+
+    // Store both timers
+    timers = [halfwayTimer, fullTimer];
 }
 
 function resetPage() {
-    clearTimeout(timer); // Clear the existing timer
+    // Clear all active timers
+    timers.forEach(clearTimeout);
+    timers = [];
+    
+    // Reset UI elements
     document.getElementById('timerText').style.display = 'block';
     document.getElementById('startButton').style.display = 'block';
-    document.getElementById('resetButton').style.display = 'none'; // Hide reset button
+    document.getElementById('resetButton').style.display = 'none';
     document.getElementById('waitingText').style.display = 'none';
     document.getElementById('timerImage').style.display = 'none';
     document.getElementById('timerImage').classList.remove('vibrating');
-    document.getElementById('timerSound').currentTime = 0; // Reset audio to start
-    document.getElementById('timerSound').pause(); // Stop any playing audio
+
+    // Reset audio elements
+    const resetAudio = (element) => {
+        element.pause();
+        element.currentTime = 0;
+    };
+    
+    resetAudio(document.getElementById('timerSound'));
+    resetAudio(document.getElementById('halfwaySound'));
 }
 </script>
 </body>
