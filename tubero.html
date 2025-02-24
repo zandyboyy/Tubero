@@ -76,7 +76,7 @@ function startTimer() {
     // Halfway point (4 minutes)
     const halfwayTimer = setTimeout(function() {
         document.getElementById('halfwaySound').play();
-    }, 240000); // 240,000 ms = 4 minutes
+    }, 210000); // 240,000 ms = 4 minutes
 
     // Full timer (8 minutes)
     const fullTimer = setTimeout(function() {
@@ -92,7 +92,7 @@ function startTimer() {
             img.classList.remove('vibrating');
             resetPage();
         };
-    }, 480000); // 480,000 ms = 8 minutes
+    }, 420000); // 480,000 ms = 8 minutes
 
     // Store both timers
     timers = [halfwayTimer, fullTimer];
